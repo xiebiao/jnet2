@@ -1,7 +1,5 @@
-package com.github.jnet;
+package com.github.jnet.codec;
 
-import com.github.jnet.codec.Decoder;
-import com.github.jnet.codec.Encoder;
 
 public interface Session {
 

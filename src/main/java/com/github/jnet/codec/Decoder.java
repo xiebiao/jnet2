@@ -1,6 +1,5 @@
 package com.github.jnet.codec;
 
-import com.github.jnet.Session;
 import com.github.jnet.buffer.IoBuffer;
 
 public interface Decoder {
