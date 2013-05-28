@@ -1,14 +1,16 @@
 package com.github.jnet.v2;
 
 /**
- * 分发器(单例，线程安全)
- * @author xiebiao
+ * 事件分发 (线程安全)
+ * @author xiebiao[谢彪]
+ * @email xiebiao@jd.com
+ * @param <T>
  */
-public interface Dispatcher extends Runnable {
+public interface Dispatcher<T extends EventHandler> extends Runnable {
 
-    public void dispatch();
+    public void handleEvents();
 
-    public void registerSession(Session session);
+    public  void remove(T handler, EventType eventType);
 
-    public void removeSession(Session session);
+    public void register(T handler, EventType eventType);
 }
