@@ -16,11 +16,11 @@ import com.github.jnet.v2.IoAcceptor;
 
 public class LoggingAcceptor extends IoAcceptor {
 
-    private InetSocketAddress                    socketAddress;
-    private Selector                             selector;
-    private ServerSocketChannel                  serverSocketChannel;
-    private EventHandler                         handler;
-    public final static Dispatcher<EventHandler> dispacher = InitiationDispatcher.getInstance();
+    private InetSocketAddress      socketAddress;
+    private Selector               selector;
+    private ServerSocketChannel    serverSocketChannel;
+    private EventHandler           handler;
+    public final static Dispatcher dispacher = InitiationDispatcher.getInstance();
 
     public LoggingAcceptor(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
@@ -41,7 +41,6 @@ public class LoggingAcceptor extends IoAcceptor {
                     dispacher.register(handler, EventType.ACCEPT_EVENT);
                 }
                 selected.clear();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -57,6 +56,7 @@ public class LoggingAcceptor extends IoAcceptor {
             serverSocketChannel.configureBlocking(false);
             serverSocketChannel.socket().bind(socketAddress);
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            System.out.println("Server started");
         } catch (ClosedChannelException e) {
             e.printStackTrace();
         } catch (IOException e) {

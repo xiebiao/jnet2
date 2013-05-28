@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 import com.github.jnet.v2.EventHandler;
 import com.github.jnet.v2.EventType;
 
-public class LoggingHandler implements EventHandler {
+public class LoggingHandler extends EventHandler {
 
     private SocketChannel socket;
     private Selector      selector;

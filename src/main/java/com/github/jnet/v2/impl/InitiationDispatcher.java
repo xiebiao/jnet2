@@ -17,7 +17,7 @@ import com.github.jnet.v2.EventType;
  * @author xiebiao[谢彪]
  * @email xiebiao@jd.com
  */
-public class InitiationDispatcher implements Dispatcher<EventHandler> {
+public class InitiationDispatcher implements Dispatcher {
 
     private static InitiationDispatcher                            dispatcher;
     private ConcurrentLinkedQueue<Couple<EventType, EventHandler>> handlerQueue = new ConcurrentLinkedQueue<Couple<EventType, EventHandler>>();
@@ -35,7 +35,7 @@ public class InitiationDispatcher implements Dispatcher<EventHandler> {
 
     }
 
-    public final static Dispatcher<EventHandler> getInstance() {
+    public final static Dispatcher getInstance() {
         if (dispatcher == null) {
             dispatcher = new InitiationDispatcher();
         }
@@ -46,12 +46,13 @@ public class InitiationDispatcher implements Dispatcher<EventHandler> {
     public void run() {
         while (true) {
             try {
+                handleEvents();
                 this.selector.select();
+                
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            handleEvents();
+
         }
 
     }

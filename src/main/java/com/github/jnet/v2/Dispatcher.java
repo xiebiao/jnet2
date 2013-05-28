@@ -6,11 +6,11 @@ package com.github.jnet.v2;
  * @email xiebiao@jd.com
  * @param <T>
  */
-public interface Dispatcher<T extends EventHandler> extends Runnable {
+public interface Dispatcher extends Runnable {
 
     public void handleEvents();
 
-    public  void remove(T handler, EventType eventType);
+    public void remove(EventHandler handler, EventType eventType);
 
-    public void register(T handler, EventType eventType);
+    public void register(EventHandler handler, EventType eventType);
 }

@@ -11,7 +11,6 @@ public class LoggingServer {
      */
     public static void main(String[] args) {
         IoAcceptor acceptor = new LoggingAcceptor(new InetSocketAddress("127.0.0.1", 8080));
-        
         acceptor.bind();
         new Thread(acceptor).start();
     }

@@ -1,13 +1,13 @@
 package com.github.jnet.v2;
 
-public interface EventHandler extends Handler {
+public abstract class EventHandler implements Handler {
 
-    public void read();
+    public abstract void read();
 
-    public void write();
+    public abstract void write();
 
-    public void close();
+    public abstract void close();
 
-    public void accept();
+    public abstract void accept();
 
 }
