@@ -1,9 +1,19 @@
 package com.github.jnet.v2;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.Selector;
+
 public interface Connection {
 
-    public void write(Object data);
+    public void register(Selector selector) throws IOException;
 
-    public void read();
+    public void write(ByteBuffer buffer);
+
+    public void write();// 内部写
+
+    public void read() throws IOException;
+
+    public boolean close();
 
 }

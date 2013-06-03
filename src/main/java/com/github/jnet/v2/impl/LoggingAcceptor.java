@@ -9,23 +9,23 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
 
-import com.github.jnet.v2.Dispatcher;
-import com.github.jnet.v2.EventHandler;
-import com.github.jnet.v2.EventType;
+import com.github.jnet.v2.AbstractConnection;
+import com.github.jnet.v2.AbstractConnectionFactory;
 import com.github.jnet.v2.IoAcceptor;
+import com.github.jnet.v2.Processor;
 
 public class LoggingAcceptor extends IoAcceptor {
 
-    private InetSocketAddress      socketAddress;
-    private Selector               selector;
-    private ServerSocketChannel    serverSocketChannel;
-    private EventHandler           handler;
-    public final static Dispatcher dispacher = InitiationDispatcher.getInstance();
+    private InetSocketAddress       socketAddress;
+    private Selector                selector;
+    private ServerSocketChannel     serverSocketChannel;
+    private Processor[]             processors;
+    private int                     nextProcessorIndex = 0;
+    private final AbstractConnectionFactory factory;
 
     public LoggingAcceptor(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
-        new Thread(dispacher).start();
-        // dispacher.register(this, EventType.ACCEPT_EVENT);
+        factory = new SimpleConnectionFactory();
     }
 
     @Override
@@ -33,19 +33,35 @@ public class LoggingAcceptor extends IoAcceptor {
         while (true) {
             try {
                 selector.select();// block
-                SocketChannel socket = serverSocketChannel.accept();
-                Set selected = selector.selectedKeys();
-                if (socket != null) {
-                    System.out.println(" socket.isConnected()");
-                    socket.configureBlocking(false);
-                    dispacher.register(handler, EventType.ACCEPT_EVENT);
+                Set<SelectionKey> keys = selector.selectedKeys();
+                try {
+                    for (SelectionKey key : keys) {
+                        if (key.isValid() && key.isAcceptable()) {
+                            accept();
+                        } else {
+                            key.cancel();
+                        }
+                    }
+                } finally {
+                    keys.clear();
                 }
-                selected.clear();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
+    }
+
+    private void accept() {
+        SocketChannel channel = null;
+        try {
+            channel = serverSocketChannel.accept();
+            channel.configureBlocking(false);
+            AbstractConnection connection = factory.create(channel);
+            Processor processor = this.getNextProcessor();
+            connection.setProcessor(processor);
+            processor.register(connection);
+        } catch (Throwable e) {}
     }
 
     @Override
@@ -66,11 +82,13 @@ public class LoggingAcceptor extends IoAcceptor {
     }
 
     @Override
-    public void register(EventHandler handler) {
-        if (handler != null) {
-            throw new java.lang.NullPointerException("handler is null");
-        }
-        this.handler = handler;
+    public void setProcessors(Processor[] processors) {
+        this.processors = processors;
+    }
+
+    private Processor getNextProcessor() {
+        this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
+        return this.processors[this.nextProcessorIndex];
     }
 
 }
