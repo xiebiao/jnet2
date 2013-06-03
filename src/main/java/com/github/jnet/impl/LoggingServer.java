@@ -1,9 +1,9 @@
-package com.github.jnet.v2.impl;
+package com.github.jnet.impl;
 
 import java.net.InetSocketAddress;
 
-import com.github.jnet.v2.IoAcceptor;
-import com.github.jnet.v2.Processor;
+import com.github.jnet.IoAcceptor;
+import com.github.jnet.Processor;
 
 public class LoggingServer {
 

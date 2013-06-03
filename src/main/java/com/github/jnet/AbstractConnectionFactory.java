@@ -1,4 +1,4 @@
-package com.github.jnet.v2;
+package com.github.jnet;
 
 import java.nio.channels.SocketChannel;
 

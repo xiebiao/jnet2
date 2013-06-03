@@ -1,11 +1,11 @@
-package com.github.jnet.v2.impl;
+package com.github.jnet.impl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.v2.AbstractConnection;
+import com.github.jnet.AbstractConnection;
 
 public class SimpleConnection extends AbstractConnection {
 

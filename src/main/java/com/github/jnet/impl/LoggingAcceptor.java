@@ -1,4 +1,4 @@
-package com.github.jnet.v2.impl;
+package com.github.jnet.impl;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,10 +9,10 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
 
-import com.github.jnet.v2.AbstractConnection;
-import com.github.jnet.v2.AbstractConnectionFactory;
-import com.github.jnet.v2.IoAcceptor;
-import com.github.jnet.v2.Processor;
+import com.github.jnet.AbstractConnection;
+import com.github.jnet.AbstractConnectionFactory;
+import com.github.jnet.IoAcceptor;
+import com.github.jnet.Processor;
 
 public class LoggingAcceptor extends IoAcceptor {
 
