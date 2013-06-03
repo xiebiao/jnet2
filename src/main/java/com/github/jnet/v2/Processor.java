@@ -21,4 +21,8 @@ public final class Processor {
     public void register(Connection connection) {
         reactor.read(connection);
     }
+
+    public void write(Connection connection) {
+        reactor.write(connection);
+    }
 }

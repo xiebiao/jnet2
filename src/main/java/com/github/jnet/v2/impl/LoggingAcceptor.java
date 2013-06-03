@@ -16,16 +16,15 @@ import com.github.jnet.v2.Processor;
 
 public class LoggingAcceptor extends IoAcceptor {
 
-    private InetSocketAddress       socketAddress;
-    private Selector                selector;
-    private ServerSocketChannel     serverSocketChannel;
-    private Processor[]             processors;
-    private int                     nextProcessorIndex = 0;
-    private final AbstractConnectionFactory factory;
+    private InetSocketAddress         socketAddress;
+    private Selector                  selector;
+    private ServerSocketChannel       serverSocketChannel;
+    private Processor[]               processors;
+    private int                       nextProcessorIndex = 0;
+    private AbstractConnectionFactory factory;
 
     public LoggingAcceptor(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
-        factory = new SimpleConnectionFactory();
     }
 
     @Override
@@ -89,6 +88,11 @@ public class LoggingAcceptor extends IoAcceptor {
     private Processor getNextProcessor() {
         this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
         return this.processors[this.nextProcessorIndex];
+    }
+
+    @Override
+    public void setHandlerFactory(AbstractConnectionFactory factory) {
+        this.factory = factory;
     }
 
 }
