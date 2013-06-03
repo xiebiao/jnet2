@@ -18,9 +18,6 @@ public class LoggingServer {
         }
         // 设置处理器
         acceptor.setProcessors(processors);
-        SimpleConnectionFactory factory = new SimpleConnectionFactory();
-        // 设置handler
-        acceptor.setHandlerFactory(factory);
         acceptor.bind();
         new Thread(acceptor).start();
     }

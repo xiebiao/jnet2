@@ -25,6 +25,7 @@ public class LoggingAcceptor extends IoAcceptor {
 
     public LoggingAcceptor(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
+        this.factory = new SimpleConnectionFactory();
     }
 
     @Override
@@ -88,11 +89,6 @@ public class LoggingAcceptor extends IoAcceptor {
     private Processor getNextProcessor() {
         this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
         return this.processors[this.nextProcessorIndex];
-    }
-
-    @Override
-    public void setHandlerFactory(AbstractConnectionFactory factory) {
-        this.factory = factory;
     }
 
 }
