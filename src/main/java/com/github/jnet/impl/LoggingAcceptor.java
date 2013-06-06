@@ -23,8 +23,7 @@ public class LoggingAcceptor extends IoAcceptor {
     private int                       nextProcessorIndex = 0;
     private AbstractConnectionFactory factory;
 
-    public LoggingAcceptor(InetSocketAddress socketAddress) {
-        this.socketAddress = socketAddress;
+    public LoggingAcceptor() {
         this.factory = new SimpleConnectionFactory();
     }
 
@@ -65,8 +64,9 @@ public class LoggingAcceptor extends IoAcceptor {
     }
 
     @Override
-    public void bind() {
+    public void bind(InetSocketAddress address) {
         try {
+            this.socketAddress = address;
             selector = Selector.open();
             serverSocketChannel = ServerSocketChannel.open();;
             serverSocketChannel.configureBlocking(false);

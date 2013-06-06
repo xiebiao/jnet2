@@ -18,7 +18,12 @@ public abstract class AbstractConnection implements Connection {
     public AbstractConnection(SocketChannel channel) {
         this.channel = channel;
         readBuffer = new IoBuffer();
+        readBuffer.position(0);
+        readBuffer.limit(0);
+
         writeBuffer = new IoBuffer();
+        writeBuffer.position(0);
+        writeBuffer.limit(0);
     }
 
     public void setProcessor(Processor processor) {
