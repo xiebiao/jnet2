@@ -2,19 +2,21 @@ package com.github.jnet.impl;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.jnet.AbstractConnection;
 import com.github.jnet.AbstractConnectionFactory;
-import com.github.jnet.IoAcceptor;
+import com.github.jnet.Acceptor;
 import com.github.jnet.Processor;
 
-public class LoggingAcceptor extends IoAcceptor {
+public class SimpleAcceptor implements Acceptor {
 
     private InetSocketAddress         socketAddress;
     private Selector                  selector;
@@ -22,9 +24,17 @@ public class LoggingAcceptor extends IoAcceptor {
     private Processor[]               processors;
     private int                       nextProcessorIndex = 0;
     private AbstractConnectionFactory factory;
+    private static final Logger       LOG                = LoggerFactory.getLogger(SimpleAcceptor.class);
 
-    public LoggingAcceptor() {
-        this.factory = new SimpleConnectionFactory();
+    public SimpleAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
+        this.factory = factory;
+        this.socketAddress = address;
+        selector = Selector.open();
+        serverSocketChannel = ServerSocketChannel.open();;
+        serverSocketChannel.configureBlocking(false);
+        serverSocketChannel.socket().bind(socketAddress);
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        LOG.debug("Server started");
     }
 
     @Override
@@ -61,24 +71,6 @@ public class LoggingAcceptor extends IoAcceptor {
             connection.setProcessor(processor);
             processor.register(connection);
         } catch (Throwable e) {}
-    }
-
-    @Override
-    public void bind(InetSocketAddress address) {
-        try {
-            this.socketAddress = address;
-            selector = Selector.open();
-            serverSocketChannel = ServerSocketChannel.open();;
-            serverSocketChannel.configureBlocking(false);
-            serverSocketChannel.socket().bind(socketAddress);
-            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println("Server started");
-        } catch (ClosedChannelException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override

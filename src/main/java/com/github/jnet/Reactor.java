@@ -6,10 +6,14 @@ import java.nio.channels.Selector;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class Reactor {
 
-    private Read  _read;
-    private Write _write;
+    private static final Logger LOG = LoggerFactory.getLogger(Reactor.class);
+    private Read                _read;
+    private Write               _write;
 
     public Reactor() throws IOException {
         _read = new Read();
@@ -19,6 +23,7 @@ public final class Reactor {
     }
 
     public final void read(Connection connection) {
+        LOG.debug("注册连接到读队列");
         _read.readQueue.add(connection);
         _read.selector.wakeup();
     }
@@ -40,6 +45,7 @@ public final class Reactor {
             Connection c = null;
             while ((c = readQueue.poll()) != null) {
                 try {
+                    LOG.debug("从读队列中取出连接");
                     c.register(selector);
                 } catch (Throwable e) {
 
@@ -52,10 +58,12 @@ public final class Reactor {
             final Selector selector = this.selector;
             while (true) {
                 try {
-                    selector.select(1000L);
+                     selector.select(1000L);
+                   // selector.select();
                     register(selector);
                     Set<SelectionKey> keys = selector.selectedKeys();
                     try {
+                        // System.out.println("遍历网络事件");
                         for (SelectionKey key : keys) {
                             Object att = key.attachment();
                             if (att != null && key.isValid()) {
