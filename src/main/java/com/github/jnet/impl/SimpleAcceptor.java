@@ -40,22 +40,22 @@ public class SimpleAcceptor implements Acceptor {
     @Override
     public void run() {
         while (true) {
+            Set<SelectionKey> keys = null;
             try {
+                LOG.debug("Acceptor loop");
                 selector.select();// block
-                Set<SelectionKey> keys = selector.selectedKeys();
-                try {
-                    for (SelectionKey key : keys) {
-                        if (key.isValid() && key.isAcceptable()) {
-                            accept();
-                        } else {
-                            key.cancel();
-                        }
+                keys = selector.selectedKeys();
+                for (SelectionKey key : keys) {
+                    if (key.isValid() && key.isAcceptable()) {
+                        accept();
+                    } else {
+                        key.cancel();
                     }
-                } finally {
-                    keys.clear();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                keys.clear();
             }
         }
 
@@ -70,6 +70,7 @@ public class SimpleAcceptor implements Acceptor {
             Processor processor = this.getNextProcessor();
             connection.setProcessor(processor);
             processor.register(connection);
+            LOG.debug("接收到新连接");
         } catch (Throwable e) {}
     }
 

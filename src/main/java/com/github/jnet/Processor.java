@@ -9,10 +9,10 @@ import java.io.IOException;
 public final class Processor {
 
     private Reactor reactor;
-
-    public Processor() {
+    private String name;
+    public Processor(String name) {
         try {
-            reactor = new Reactor();
+            reactor = new Reactor(name);
         } catch (IOException e) {
             e.printStackTrace();
         }

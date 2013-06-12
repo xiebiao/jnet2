@@ -14,12 +14,13 @@ public final class Reactor {
     private static final Logger LOG = LoggerFactory.getLogger(Reactor.class);
     private Read                _read;
     private Write               _write;
+    private String              name;
 
-    public Reactor() throws IOException {
+    public Reactor(String name) throws IOException {
         _read = new Read();
         _write = new Write();
-        new Thread(_read).start();
-        new Thread(_write).start();
+        new Thread(_read,name).start();
+        new Thread(_write,name).start();
     }
 
     public final void read(Connection connection) {
@@ -36,6 +37,7 @@ public final class Reactor {
 
         private ConcurrentLinkedQueue<Connection> readQueue = new ConcurrentLinkedQueue<Connection>();
         private final Selector                    selector;
+  
 
         public Read() throws IOException {
             selector = Selector.open();
@@ -45,7 +47,7 @@ public final class Reactor {
             Connection c = null;
             while ((c = readQueue.poll()) != null) {
                 try {
-                    LOG.debug("从读队列中取出连接");
+                    LOG.debug(Thread.currentThread().getName() + ":从读队列中取出连接");
                     c.register(selector);
                 } catch (Throwable e) {
 
@@ -58,12 +60,11 @@ public final class Reactor {
             final Selector selector = this.selector;
             while (true) {
                 try {
-                     selector.select(1000L);
-                   // selector.select();
+                    selector.select();
                     register(selector);
                     Set<SelectionKey> keys = selector.selectedKeys();
                     try {
-                        // System.out.println("遍历网络事件");
+                        LOG.debug(Thread.currentThread().getName() + ":遍历网络事件");
                         for (SelectionKey key : keys) {
                             Object att = key.attachment();
                             if (att != null && key.isValid()) {

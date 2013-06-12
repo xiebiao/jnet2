@@ -17,10 +17,10 @@ public class SimpleServer {
     public static void main(String[] args) throws Throwable {
         ExecutorService executor = Executors.newFixedThreadPool(2, new JnetThreadFactory());
         AbstractConnectionFactory factory = new SimpleConnectionFactory();
-        Acceptor acceptor = new SimpleAcceptor(new InetSocketAddress("10.28.164.70", 8080), factory);
+        Acceptor acceptor = new SimpleAcceptor(new InetSocketAddress("127.0.0.1", 8080), factory);
         Processor[] processors = new Processor[2];
         for (int i = 0; i < processors.length; i++) {
-            processors[i] = new Processor();
+            processors[i] = new Processor(i+"");
         }
         // 设置处理器
         acceptor.setProcessors(processors);

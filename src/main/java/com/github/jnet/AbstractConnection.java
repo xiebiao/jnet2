@@ -46,7 +46,6 @@ public abstract class AbstractConnection implements Connection {
         } else {
             LOG.debug(this.getClass().getName() + ":已注册网络事件");
         }
-        selector.wakeup();
     }
 
 }
