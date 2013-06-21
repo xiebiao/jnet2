@@ -34,7 +34,7 @@ public class SimpleAcceptor implements Acceptor {
         serverSocketChannel.configureBlocking(false);
         serverSocketChannel.socket().bind(socketAddress);
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-        LOG.debug("Server started");
+        LOG.debug("Server started: " + socketAddress);
     }
 
     @Override
@@ -42,7 +42,6 @@ public class SimpleAcceptor implements Acceptor {
         while (true) {
             Set<SelectionKey> keys = null;
             try {
-                LOG.debug("Acceptor loop");
                 selector.select();// block
                 keys = selector.selectedKeys();
                 for (SelectionKey key : keys) {

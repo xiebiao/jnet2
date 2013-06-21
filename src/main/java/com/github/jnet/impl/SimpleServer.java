@@ -16,8 +16,7 @@ public class SimpleServer {
         Acceptor acceptor = new SimpleAcceptor(new InetSocketAddress("127.0.0.1", 8080), factory);
         Processor[] processors = new Processor[Runtime.getRuntime().availableProcessors()];
         for (int i = 0; i < processors.length; i++) {
-           System.out.println(i);
-            processors[i] = new Processor(i+"");
+            processors[i] = new Processor(i + "");
         }
         // 设置处理器
         acceptor.setProcessors(processors);

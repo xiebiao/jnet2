@@ -48,7 +48,6 @@ public final class Reactor {
             Connection c = null;
             while ((c = readQueue.poll()) != null) {
                 try {
-                    LOG.debug(Thread.currentThread().getName() + ":从读队列中取出连接");
                     c.register(selector);
                 } catch (Throwable e) {
 
@@ -66,7 +65,6 @@ public final class Reactor {
                     register(selector);
                     Set<SelectionKey> keys = selector.selectedKeys();
                     try {
-                        LOG.debug(Thread.currentThread().getName() + ":遍历网络事件");
                         for (SelectionKey key : keys) {
                             Object att = key.attachment();
                             if (att != null && key.isValid()) {
@@ -104,7 +102,6 @@ public final class Reactor {
         public void run() {
             while (true) {
                 Connection c = writeQueue.poll();
-                System.out.println("write runing");
                 if (c != null) {
                     c.write();
                 } else {
@@ -112,7 +109,6 @@ public final class Reactor {
                         try {
                             this.wait();
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }

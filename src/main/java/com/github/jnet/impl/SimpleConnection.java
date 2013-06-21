@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.github.jnet.AbstractConnection;
 import com.github.jnet.utils.IoUtils;
+import com.github.jnet.utils.StringUtils;
 
 public class SimpleConnection extends AbstractConnection {
 
@@ -29,13 +30,8 @@ public class SimpleConnection extends AbstractConnection {
         IoUtils.read(this.channel, this.readBuffer);
         int len = readBuffer.position();
         byte b = readBuffer.getByte(len - 1);
-        System.out.println(b);
-        if (b == 3) {
-            /** Ctrl+C 关闭连接 */
-            this.close();
-        }
         if (b == (byte) '\n') {
-            LOG.debug("客户端数据:" + new String(readBuffer.readBytes(0, len)));
+            LOG.debug(StringUtils.dumpAsHex(readBuffer.readBytes(0, len), len));
             this.writeBuffer.position(0);
             this.writeBuffer.writeBytes("Server say:".getBytes());
             this.writeBuffer.writeBytes(readBuffer.readBytes(0, len));
@@ -58,8 +54,11 @@ public class SimpleConnection extends AbstractConnection {
     @Override
     public void write() {
         try {
-            System.out.println("SimpleConnection is writing");
             if ((processKey.interestOps() & SelectionKey.OP_WRITE) == 0) {
+                int len = this.writeBuffer.position();
+                byte[] bs = new byte[len];
+                this.writeBuffer.getBuffer().get(bs);
+                LOG.debug(StringUtils.dumpAsHex(bs, len));
                 this.channel.write(this.writeBuffer.getBuffer());
             }
         } catch (IOException e) {
