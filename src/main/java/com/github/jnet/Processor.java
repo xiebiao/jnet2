@@ -9,7 +9,6 @@ import java.io.IOException;
 public final class Processor {
 
     private Reactor reactor;
-    private String name;
     public Processor(String name) {
         try {
             reactor = new Reactor(name);

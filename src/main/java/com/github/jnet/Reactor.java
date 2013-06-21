@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,34 +12,35 @@ import org.slf4j.LoggerFactory;
 public final class Reactor {
 
     private static final Logger LOG = LoggerFactory.getLogger(Reactor.class);
-    private Read                _read;
-    private Write               _write;
-    private String              name;
+    private Reader              _reader;
+    private Writer              _writer;
 
     public Reactor(String name) throws IOException {
-        _read = new Read();
-        _write = new Write();
-        new Thread(_read,name).start();
-        new Thread(_write,name).start();
+        _reader = new Reader();
+        _writer = new Writer();
+        new Thread(_reader, name + "-reader").start();
+        new Thread(_writer, name + "-writer").start();
     }
 
     public final void read(Connection connection) {
         LOG.debug("注册连接到读队列");
-        _read.readQueue.add(connection);
-        _read.selector.wakeup();
+        _reader.readQueue.add(connection);
+        _reader.selector.wakeup();
     }
 
     public final void write(Connection connection) {
-        _write.writeQueue.add(connection);
+        _writer.writeQueue.add(connection);
+        synchronized (_writer) {
+            _writer.notify();
+        }
     }
 
-    class Read implements Runnable {
+    class Reader implements Runnable {
 
-        private ConcurrentLinkedQueue<Connection> readQueue = new ConcurrentLinkedQueue<Connection>();
-        private final Selector                    selector;
-  
+        private LinkedBlockingQueue<Connection> readQueue = new LinkedBlockingQueue<Connection>();
+        private final Selector                  selector;
 
-        public Read() throws IOException {
+        public Reader() throws IOException {
             selector = Selector.open();
         }
 
@@ -60,6 +61,7 @@ public final class Reactor {
             final Selector selector = this.selector;
             while (true) {
                 try {
+                    // selector.select(1000L);
                     selector.select();
                     register(selector);
                     Set<SelectionKey> keys = selector.selectedKeys();
@@ -94,16 +96,27 @@ public final class Reactor {
         }
     }
 
-    class Write implements Runnable {
+    class Writer implements Runnable {
 
-        private ConcurrentLinkedQueue<Connection> writeQueue = new ConcurrentLinkedQueue<Connection>();
+        private LinkedBlockingQueue<Connection> writeQueue = new LinkedBlockingQueue<Connection>();
 
         @Override
         public void run() {
             while (true) {
                 Connection c = writeQueue.poll();
+                System.out.println("write runing");
                 if (c != null) {
                     c.write();
+                } else {
+                    synchronized (this) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
             }
         }
