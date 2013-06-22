@@ -1,4 +1,4 @@
-package com.github.jnet.impl;
+package com.github.jnet.example.echo;
 
 import java.nio.channels.SocketChannel;
 
