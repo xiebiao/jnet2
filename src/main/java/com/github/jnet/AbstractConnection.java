@@ -20,6 +20,7 @@ public abstract class AbstractConnection implements Connection {
     protected IoBuffer            writeBuffer  = null;
     protected AtomicBoolean       isRegistered = new AtomicBoolean(false);
     protected static final int    BUF_SIZE     = 1024;
+    protected Handler             handler;
     private static final Logger   LOG          = LoggerFactory.getLogger(AbstractConnection.class);
 
     public AbstractConnection(SocketChannel channel) {
@@ -31,6 +32,10 @@ public abstract class AbstractConnection implements Connection {
         writeBuffer = new IoBuffer();
         writeBuffer.position(0);
         writeBuffer.limit(0);
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 
     public void setProcessor(Processor processor) {

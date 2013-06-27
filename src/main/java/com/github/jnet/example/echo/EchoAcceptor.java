@@ -16,7 +16,7 @@ import com.github.jnet.AbstractConnectionFactory;
 import com.github.jnet.Acceptor;
 import com.github.jnet.Processor;
 
-public class SimpleAcceptor implements Acceptor {
+public class EchoAcceptor implements Acceptor {
 
     private InetSocketAddress         socketAddress;
     private Selector                  selector;
@@ -24,9 +24,9 @@ public class SimpleAcceptor implements Acceptor {
     private Processor[]               processors;
     private int                       nextProcessorIndex = 0;
     private AbstractConnectionFactory factory;
-    private static final Logger       LOG                = LoggerFactory.getLogger(SimpleAcceptor.class);
+    private static final Logger       LOG                = LoggerFactory.getLogger(EchoAcceptor.class);
 
-    public SimpleAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
+    public EchoAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
         this.factory = factory;
         this.socketAddress = address;
         selector = Selector.open();

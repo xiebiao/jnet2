@@ -12,15 +12,15 @@ import com.github.jnet.AbstractConnection;
 import com.github.jnet.utils.IoUtils;
 import com.github.jnet.utils.StringUtils;
 
-public class SimpleConnection extends AbstractConnection {
+public class EchoConnection extends AbstractConnection {
 
     private static final byte[] SERVER_SAY   = "Server say:".getBytes();
     private static int          READ_HEADER  = 0;
     private static int          READ_BODY    = 1;
     private int                 currentState = READ_HEADER;
-    private static final Logger LOG          = LoggerFactory.getLogger(SimpleConnection.class);
+    private static final Logger LOG          = LoggerFactory.getLogger(EchoConnection.class);
 
-    public SimpleConnection(SocketChannel channel) {
+    public EchoConnection(SocketChannel channel) {
         super(channel);
 
     }
