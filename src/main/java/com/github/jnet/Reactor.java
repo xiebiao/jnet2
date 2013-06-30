@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public final class Reactor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Reactor.class);
+    private static final Logger logger = LoggerFactory.getLogger(Reactor.class);
     private Reader              _reader;
     private Writer              _writer;
 
@@ -23,7 +23,6 @@ public final class Reactor {
     }
 
     public final void read(Connection connection) {
-        LOG.debug("注册连接到读队列");
         _reader.readQueue.add(connection);
         _reader.selector.wakeup();
     }

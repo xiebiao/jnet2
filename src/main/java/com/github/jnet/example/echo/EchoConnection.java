@@ -18,7 +18,7 @@ public class EchoConnection extends AbstractConnection {
     private static int          READ_HEADER  = 0;
     private static int          READ_BODY    = 1;
     private int                 currentState = READ_HEADER;
-    private static final Logger LOG          = LoggerFactory.getLogger(EchoConnection.class);
+    private static final Logger log          = LoggerFactory.getLogger(EchoConnection.class);
 
     public EchoConnection(SocketChannel channel) {
         super(channel);
@@ -31,7 +31,7 @@ public class EchoConnection extends AbstractConnection {
         int len = readBuffer.position();
         byte b = readBuffer.getByte(len - 1);
         if (b == (byte) '\n') {
-            LOG.debug(StringUtils.dumpAsHex(readBuffer.readBytes(0, len), len));
+            log.debug(StringUtils.dumpAsHex(readBuffer.readBytes(0, len), len));
             this.writeBuffer.position(0);
             this.writeBuffer.writeBytes("Server say:".getBytes());
             this.writeBuffer.writeBytes(readBuffer.readBytes(0, len));
@@ -58,7 +58,6 @@ public class EchoConnection extends AbstractConnection {
                 int len = this.writeBuffer.position();
                 byte[] bs = new byte[len];
                 this.writeBuffer.getBuffer().get(bs);
-                LOG.debug(StringUtils.dumpAsHex(bs, len));
                 this.channel.write(this.writeBuffer.getBuffer());
             }
         } catch (IOException e) {

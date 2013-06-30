@@ -8,12 +8,12 @@ public interface Connection {
 
     public void register(Selector selector) throws IOException;
 
-    public void write(ByteBuffer buffer);
+    public void write(ByteBuffer buffer) throws IOException;
 
-    public void write();// 内部写
+    public void write();
 
     public void read() throws IOException;
 
-    public boolean close();
+    public boolean close() throws IOException;
 
 }

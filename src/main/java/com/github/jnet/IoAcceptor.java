@@ -1,4 +1,4 @@
-package com.github.jnet.example.echo;
+package com.github.jnet;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,12 +11,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.jnet.AbstractConnection;
-import com.github.jnet.AbstractConnectionFactory;
-import com.github.jnet.Acceptor;
-import com.github.jnet.Processor;
 
-public class EchoAcceptor implements Acceptor {
+public abstract class IoAcceptor implements Acceptor {
 
     private InetSocketAddress         socketAddress;
     private Selector                  selector;
@@ -24,9 +20,9 @@ public class EchoAcceptor implements Acceptor {
     private Processor[]               processors;
     private int                       nextProcessorIndex = 0;
     private AbstractConnectionFactory factory;
-    private static final Logger       LOG                = LoggerFactory.getLogger(EchoAcceptor.class);
+    private static final Logger       logger                = LoggerFactory.getLogger(IoAcceptor.class);
 
-    public EchoAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
+    public IoAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
         this.factory = factory;
         this.socketAddress = address;
         selector = Selector.open();
@@ -34,7 +30,7 @@ public class EchoAcceptor implements Acceptor {
         serverSocketChannel.configureBlocking(false);
         serverSocketChannel.socket().bind(socketAddress);
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-        LOG.debug("Server started: " + socketAddress);
+        logger.debug("Server started: " + socketAddress);
     }
 
     @Override
@@ -69,7 +65,6 @@ public class EchoAcceptor implements Acceptor {
             Processor processor = this.getNextProcessor();
             connection.setProcessor(processor);
             processor.register(connection);
-            LOG.debug("接收到新连接");
         } catch (Throwable e) {}
     }
 

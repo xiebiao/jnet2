@@ -21,7 +21,7 @@ public abstract class AbstractConnection implements Connection {
     protected AtomicBoolean       isRegistered = new AtomicBoolean(false);
     protected static final int    BUF_SIZE     = 1024;
     protected Handler             handler;
-    private static final Logger   LOG          = LoggerFactory.getLogger(AbstractConnection.class);
+    private static final Logger   logger          = LoggerFactory.getLogger(AbstractConnection.class);
 
     public AbstractConnection(SocketChannel channel) {
         this.channel = channel;
@@ -45,12 +45,9 @@ public abstract class AbstractConnection implements Connection {
     @Override
     public void register(Selector selector) throws IOException {
         if (isRegistered.get() == false) {
-            LOG.debug(this.getClass().getName() + ":注册网络事件");
             processKey = channel.register(selector, SelectionKey.OP_READ, this);
             isRegistered.set(true);
-        } else {
-            LOG.debug(this.getClass().getName() + ":已注册网络事件");
-        }
+        } 
     }
 
 }
