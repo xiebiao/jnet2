@@ -14,11 +14,8 @@ import com.github.jnet.utils.StringUtils;
 
 public class EchoConnection extends AbstractConnection {
 
-    private static final byte[] SERVER_SAY   = "Server say:".getBytes();
-    private static int          READ_HEADER  = 0;
-    private static int          READ_BODY    = 1;
-    private int                 currentState = READ_HEADER;
-    private static final Logger log          = LoggerFactory.getLogger(EchoConnection.class);
+    private static final byte[] SERVER_SAY = "Server say:".getBytes();
+    private static final Logger log        = LoggerFactory.getLogger(EchoConnection.class);
 
     public EchoConnection(SocketChannel channel) {
         super(channel);
@@ -26,14 +23,21 @@ public class EchoConnection extends AbstractConnection {
     }
 
     public void read() throws IOException {
-        readBuffer.limit(readBuffer.position() + BUF_SIZE);
+        this.readBuffer.limit(readBuffer.position() + bufferMaxSize);
         IoUtils.read(this.channel, this.readBuffer);
         int len = readBuffer.position();
-        byte b = readBuffer.getByte(len - 1);
-        if (b == (byte) '\n') {
+        byte lastByte = readBuffer.getByte(len - 1);
+        byte[] exit = readBuffer.getBytes(0, len - 1);
+
+        if (lastByte == (byte) '\n') {
+    
+            if (new String(exit).trim().equalsIgnoreCase("exit")) {
+                this.close();
+                return;
+            }
             log.debug(StringUtils.dumpAsHex(readBuffer.readBytes(0, len), len));
             this.writeBuffer.position(0);
-            this.writeBuffer.writeBytes("Server say:".getBytes());
+            this.writeBuffer.writeBytes(SERVER_SAY);
             this.writeBuffer.writeBytes(readBuffer.readBytes(0, len));
             this.writeBuffer.position(0);
             this.writeBuffer.limit(SERVER_SAY.length + len);
@@ -70,7 +74,9 @@ public class EchoConnection extends AbstractConnection {
     public boolean close() {
         try {
             this.channel.close();
-            return true;
+            this.readBuffer.clear();
+            this.writeBuffer.clear();
+            return this.isClosed.getAndSet(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

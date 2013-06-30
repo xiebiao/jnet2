@@ -16,12 +16,13 @@ public abstract class AbstractConnection implements Connection {
     protected final SocketChannel channel;
     protected SelectionKey        processKey;
     protected Processor           processor;
-    protected IoBuffer            readBuffer   = null;
-    protected IoBuffer            writeBuffer  = null;
-    protected AtomicBoolean       isRegistered = new AtomicBoolean(false);
-    protected static final int    BUF_SIZE     = 1024;
+    protected IoBuffer            readBuffer    = null;
+    protected IoBuffer            writeBuffer   = null;
+    protected AtomicBoolean       isRegistered;
+    protected AtomicBoolean       isClosed;
+    protected int                 bufferMaxSize = 1024;
     protected Handler             handler;
-    private static final Logger   logger          = LoggerFactory.getLogger(AbstractConnection.class);
+    private static final Logger   logger        = LoggerFactory.getLogger(AbstractConnection.class);
 
     public AbstractConnection(SocketChannel channel) {
         this.channel = channel;
@@ -32,6 +33,8 @@ public abstract class AbstractConnection implements Connection {
         writeBuffer = new IoBuffer();
         writeBuffer.position(0);
         writeBuffer.limit(0);
+        isRegistered = new AtomicBoolean(false);
+        isClosed = new AtomicBoolean(false);
     }
 
     public void setHandler(Handler handler) {
@@ -46,8 +49,8 @@ public abstract class AbstractConnection implements Connection {
     public void register(Selector selector) throws IOException {
         if (isRegistered.get() == false) {
             processKey = channel.register(selector, SelectionKey.OP_READ, this);
-            isRegistered.set(true);
-        } 
+            isRegistered.getAndSet(true);
+        }
     }
 
 }

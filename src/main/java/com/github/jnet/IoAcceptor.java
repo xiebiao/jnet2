@@ -11,16 +11,15 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public abstract class IoAcceptor implements Acceptor {
 
-    private InetSocketAddress         socketAddress;
-    private Selector                  selector;
-    private ServerSocketChannel       serverSocketChannel;
-    private Processor[]               processors;
-    private int                       nextProcessorIndex = 0;
-    private AbstractConnectionFactory factory;
-    private static final Logger       logger                = LoggerFactory.getLogger(IoAcceptor.class);
+    protected InetSocketAddress         socketAddress;
+    protected Selector                  selector;
+    protected ServerSocketChannel       serverSocketChannel;
+    protected Processor[]               processors;
+    protected int                       nextProcessorIndex = 0;
+    protected AbstractConnectionFactory factory;
+    private static final Logger         logger             = LoggerFactory.getLogger(IoAcceptor.class);
 
     public IoAcceptor(InetSocketAddress address, AbstractConnectionFactory factory) throws IOException {
         this.factory = factory;
@@ -34,7 +33,7 @@ public abstract class IoAcceptor implements Acceptor {
     }
 
     @Override
-    public void run() {
+    public final void run() {
         while (true) {
             Set<SelectionKey> keys = null;
             try {
@@ -73,7 +72,7 @@ public abstract class IoAcceptor implements Acceptor {
         this.processors = processors;
     }
 
-    private Processor getNextProcessor() {
+    protected Processor getNextProcessor() {
         this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
         return this.processors[this.nextProcessorIndex];
     }
