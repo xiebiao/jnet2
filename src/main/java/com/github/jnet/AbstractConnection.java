@@ -21,7 +21,7 @@ public abstract class AbstractConnection implements Connection {
     protected AtomicBoolean       isRegistered;
     protected AtomicBoolean       isClosed;
     protected int                 bufferMaxSize = 1024;
-    protected Handler             handler;
+    protected IoHandler             handler;
     private static final Logger   logger        = LoggerFactory.getLogger(AbstractConnection.class);
 
     public AbstractConnection(SocketChannel channel) {
@@ -37,7 +37,7 @@ public abstract class AbstractConnection implements Connection {
         isClosed = new AtomicBoolean(false);
     }
 
-    public void setHandler(Handler handler) {
+    public void setHandler(IoHandler handler) {
         this.handler = handler;
     }
 

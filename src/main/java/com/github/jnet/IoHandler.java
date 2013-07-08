@@ -1,6 +1,6 @@
 package com.github.jnet;
 
-public interface Handler {
+public interface IoHandler {
 
     public void handle(byte[] data);
 }

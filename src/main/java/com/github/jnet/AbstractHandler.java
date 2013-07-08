@@ -1,6 +1,6 @@
 package com.github.jnet;
 
-public class AbstractHandler implements Handler {
+public class AbstractHandler implements IoHandler {
 
     protected AbstractConnection connection;
 

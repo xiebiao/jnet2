@@ -2,7 +2,7 @@ package com.github.jnet.example.echo;
 
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.AbstractConnectionFactory;
+import com.github.jnet.factory.AbstractConnectionFactory;
 
 public class EchoConnectionFactory extends AbstractConnectionFactory {
 

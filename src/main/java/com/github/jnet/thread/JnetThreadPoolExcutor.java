@@ -16,6 +16,10 @@ public class JnetThreadPoolExcutor extends ThreadPoolExecutor {
         this.name = name;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     class JnetThreadFactory implements ThreadFactory {
 
         private final AtomicInteger threadNumber;

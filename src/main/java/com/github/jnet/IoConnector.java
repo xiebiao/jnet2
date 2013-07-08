@@ -1,14 +1,20 @@
 package com.github.jnet;
 
+import java.io.IOException;
+import java.nio.channels.Selector;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class IoConnector implements Acceptor {
 
-    protected String      name;
-    protected Processor[] processors;
-    protected int         nextProcessorIndex = 0;
-
-    public IoConnector(String name) {
+    protected String         name;
+    protected Processor[]    processors;
+    protected final Selector selector;
+    protected int            nextProcessorIndex = 0;
+    protected LinkedBlockingQueue<Connection> connectQueue = new LinkedBlockingQueue<Connection>();
+    
+    public IoConnector(String name) throws IOException {
         this.name = name;
+        this.selector = Selector.open();
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.github.jnet.example.echo;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import com.github.jnet.AbstractConnectionFactory;
 import com.github.jnet.IoAcceptor;
 import com.github.jnet.Processor;
+import com.github.jnet.factory.AbstractConnectionFactory;
 
 public class EchoServer extends IoAcceptor{
 

@@ -1,6 +1,8 @@
-package com.github.jnet;
+package com.github.jnet.factory;
 
 import java.nio.channels.SocketChannel;
+
+import com.github.jnet.AbstractConnection;
 
 public abstract class AbstractConnectionFactory {
 
