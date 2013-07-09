@@ -6,14 +6,14 @@ import java.nio.channels.Selector;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public final class Reactor {
+public final class IoReactor {
 
     // private static final Logger logger =
     // LoggerFactory.getLogger(Reactor.class);
     private Reader _reader;
     private Writer _writer;
 
-    public Reactor(String name) throws IOException {
+    public IoReactor(String name) throws IOException {
         _reader = new Reader();
         _writer = new Writer();
         new Thread(_reader, name + "-reader").start();

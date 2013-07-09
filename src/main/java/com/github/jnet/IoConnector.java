@@ -19,10 +19,17 @@ public abstract class IoConnector implements Acceptor {
         this.selector = Selector.open();
     }
 
+    public void holdConnect(TargetConnection c) {
+        connectQueue.add(c);
+        //connectQueue.offer(e)
+        selector.wakeup();
+    }
+
     private void connect(Selector selector) {
         TargetConnection c = null;
         while ((c = connectQueue.poll()) != null) {
             try {
+                System.out.println("selector");
                 c.connect(selector);
             } catch (Throwable e) {
                 //
@@ -33,15 +40,17 @@ public abstract class IoConnector implements Acceptor {
     @Override
     public void run() {
         final Selector selector = this.selector;
-        for (;;) {
+        while (true) {
+
             try {
                 selector.select(1000L);
                 connect(selector);
                 Set<SelectionKey> keys = selector.selectedKeys();
                 try {
                     for (SelectionKey key : keys) {
-                        Object att = key.attachment();
+                        Object att = key.attachment();                       
                         if (att != null && key.isValid() && key.isConnectable()) {
+                            System.out.println("isConnectable");
                             closeConnect(key, att);
                         } else {
                             key.cancel();

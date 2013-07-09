@@ -12,7 +12,7 @@ public abstract class AbstractConnection implements Connection {
 
     protected final SocketChannel channel;
     protected SelectionKey        processKey;
-    protected IoProcessor           processor;
+    protected IoProcessor         processor;
     protected IoBuffer            readBuffer    = null;
     protected IoBuffer            writeBuffer   = null;
     protected AtomicBoolean       isRegistered;
@@ -23,7 +23,7 @@ public abstract class AbstractConnection implements Connection {
     // private static final Logger logger =
     // LoggerFactory.getLogger(AbstractConnection.class);
 
-    public AbstractConnection(SocketChannel channel) {
+    public AbstractConnection(SocketChannel channel) throws IOException {
         this.channel = channel;
         readBuffer = new IoBuffer();
         readBuffer.position(0);

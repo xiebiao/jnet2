@@ -4,10 +4,10 @@ import java.io.IOException;
 
 public final class IoProcessor {
 
-    private Reactor reactor;
+    private IoReactor reactor;
     public IoProcessor(String name) {
         try {
-            reactor = new Reactor(name);
+            reactor = new IoReactor(name);
         } catch (IOException e) {
             e.printStackTrace();
         }

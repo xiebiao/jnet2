@@ -17,7 +17,7 @@ public class EchoConnection extends SourceConnection {
     private static final byte[] SERVER_SAY = "Server say:".getBytes();
     private static final Logger log        = LoggerFactory.getLogger(EchoConnection.class);
 
-    public EchoConnection(SocketChannel channel) {
+    public EchoConnection(SocketChannel channel) throws IOException {
         super(channel);
     }
 
@@ -29,7 +29,7 @@ public class EchoConnection extends SourceConnection {
         byte[] exit = readBuffer.getBytes(0, len - 1);
 
         if (lastByte == (byte) '\n') {
-    
+
             if (new String(exit).trim().equalsIgnoreCase("exit")) {
                 this.close();
                 return;

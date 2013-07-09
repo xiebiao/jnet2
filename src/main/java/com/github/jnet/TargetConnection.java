@@ -13,13 +13,15 @@ public abstract class TargetConnection extends AbstractConnection {
     protected IoConnector connector;
     protected IoHandler   handler;
 
-    public TargetConnection(SocketChannel channel) {
+    public TargetConnection(SocketChannel channel) throws IOException {
         super(channel);
     }
 
-    public void connect(Selector selector) throws IOException {
-        channel.register(selector, SelectionKey.OP_CONNECT, this);
+    public void connect(Selector selector) throws IOException {       
         channel.connect(new InetSocketAddress(host, port));
+        channel.register(selector, SelectionKey.OP_CONNECT, this);
+        System.out.println("connect...");
+
     }
 
     public String getHost() {
