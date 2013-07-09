@@ -6,23 +6,22 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.jnet.buffer.IoBuffer;
 
 public abstract class AbstractConnection implements Connection {
 
     protected final SocketChannel channel;
     protected SelectionKey        processKey;
-    protected Processor           processor;
+    protected IoProcessor           processor;
     protected IoBuffer            readBuffer    = null;
     protected IoBuffer            writeBuffer   = null;
     protected AtomicBoolean       isRegistered;
     protected AtomicBoolean       isClosed;
     protected int                 bufferMaxSize = 1024;
-    protected IoHandler             handler;
-    private static final Logger   logger        = LoggerFactory.getLogger(AbstractConnection.class);
+    protected IoHandler           handler;
+
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(AbstractConnection.class);
 
     public AbstractConnection(SocketChannel channel) {
         this.channel = channel;
@@ -41,7 +40,7 @@ public abstract class AbstractConnection implements Connection {
         this.handler = handler;
     }
 
-    public void setProcessor(Processor processor) {
+    public void setProcessor(IoProcessor processor) {
         this.processor = processor;
     }
 

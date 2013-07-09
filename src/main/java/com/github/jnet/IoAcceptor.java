@@ -18,7 +18,7 @@ public abstract class IoAcceptor implements Acceptor {
     protected InetSocketAddress         socketAddress;
     protected Selector                  selector;
     protected ServerSocketChannel       serverSocketChannel;
-    protected Processor[]               processors;
+    protected IoProcessor[]               processors;
     protected int                       nextProcessorIndex = 0;
     protected AbstractConnectionFactory factory;
     private static final Logger         logger             = LoggerFactory.getLogger(IoAcceptor.class);
@@ -63,18 +63,18 @@ public abstract class IoAcceptor implements Acceptor {
             channel = serverSocketChannel.accept();
             channel.configureBlocking(false);
             AbstractConnection connection = factory.create(channel);
-            Processor processor = this.getNextProcessor();
+            IoProcessor processor = this.getNextProcessor();
             connection.setProcessor(processor);
             processor.register(connection);
         } catch (Throwable e) {}
     }
 
     @Override
-    public void setProcessors(Processor[] processors) {
+    public void setProcessors(IoProcessor[] processors) {
         this.processors = processors;
     }
 
-    protected Processor getNextProcessor() {
+    protected IoProcessor getNextProcessor() {
         this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
         return this.processors[this.nextProcessorIndex];
     }

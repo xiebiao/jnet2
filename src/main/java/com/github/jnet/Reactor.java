@@ -6,14 +6,12 @@ import java.nio.channels.Selector;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public final class Reactor {
 
-    private static final Logger logger = LoggerFactory.getLogger(Reactor.class);
-    private Reader              _reader;
-    private Writer              _writer;
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(Reactor.class);
+    private Reader _reader;
+    private Writer _writer;
 
     public Reactor(String name) throws IOException {
         _reader = new Reader();

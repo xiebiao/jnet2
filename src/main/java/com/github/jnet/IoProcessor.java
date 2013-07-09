@@ -2,14 +2,10 @@ package com.github.jnet;
 
 import java.io.IOException;
 
-/**
- * 处理器
- * @author xiebiao
- */
-public final class Processor {
+public final class IoProcessor {
 
     private Reactor reactor;
-    public Processor(String name) {
+    public IoProcessor(String name) {
         try {
             reactor = new Reactor(name);
         } catch (IOException e) {

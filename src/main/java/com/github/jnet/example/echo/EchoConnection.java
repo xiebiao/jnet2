@@ -8,18 +8,17 @@ import java.nio.channels.SocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.jnet.AbstractConnection;
+import com.github.jnet.SourceConnection;
 import com.github.jnet.utils.IoUtils;
 import com.github.jnet.utils.StringUtils;
 
-public class EchoConnection extends AbstractConnection {
+public class EchoConnection extends SourceConnection {
 
     private static final byte[] SERVER_SAY = "Server say:".getBytes();
     private static final Logger log        = LoggerFactory.getLogger(EchoConnection.class);
 
     public EchoConnection(SocketChannel channel) {
         super(channel);
-
     }
 
     public void read() throws IOException {

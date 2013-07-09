@@ -1,0 +1,41 @@
+package com.github.jnet;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+
+public abstract class TargetConnection extends AbstractConnection {
+
+    protected String      host;
+    protected int         port;
+    protected IoConnector connector;
+    protected IoHandler   handler;
+
+    public TargetConnection(SocketChannel channel) {
+        super(channel);
+    }
+
+    public void connect(Selector selector) throws IOException {
+        channel.register(selector, SelectionKey.OP_CONNECT, this);
+        channel.connect(new InetSocketAddress(host, port));
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+}
