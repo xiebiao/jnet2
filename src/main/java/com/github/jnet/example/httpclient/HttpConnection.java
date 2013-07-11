@@ -6,10 +6,9 @@ import java.nio.channels.SocketChannel;
 
 import com.github.jnet.TargetConnection;
 
-
 public class HttpConnection extends TargetConnection {
 
-    public HttpConnection(SocketChannel channel)  throws IOException{
+    public HttpConnection(SocketChannel channel) throws IOException {
         super(channel);
         channel.configureBlocking(false);
     }
@@ -22,7 +21,7 @@ public class HttpConnection extends TargetConnection {
 
     @Override
     public void write() {
-        // TODO Auto-generated method stub
+        String get = "GET /index.html http/1.1";
 
     }
 

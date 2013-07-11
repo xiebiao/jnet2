@@ -43,7 +43,7 @@ public abstract class IoConnector implements Acceptor {
         while (true) {
 
             try {
-                selector.select(1000L);
+                //selector.select(1000L);
                 connect(selector);
                 Set<SelectionKey> keys = selector.selectedKeys();
                 try {
