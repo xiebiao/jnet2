@@ -22,7 +22,13 @@ public class HttpConnection extends TargetConnection {
     @Override
     public void write() {
         String get = "GET /index.html http/1.1";
-
+        try {
+            this.writeBuffer.writeBytes("http".getBytes());
+            this.channel.write(this.writeBuffer.getBuffer());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
