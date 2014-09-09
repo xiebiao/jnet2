@@ -22,8 +22,15 @@ public class EchoConnection extends SourceConnection {
     }
 
     public void read() throws IOException {
+
         this.readBuffer.limit(readBuffer.position() + bufferMaxSize);
-        IoUtils.read(this.channel, this.readBuffer);
+        try {
+            IoUtils.read(this.channel, this.readBuffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.close();
+            return;
+        }
         int len = readBuffer.position();
         byte lastByte = readBuffer.getByte(len - 1);
         byte[] exit = readBuffer.getBytes(0, len - 1);

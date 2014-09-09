@@ -3,9 +3,6 @@ package com.github.jnet.utils;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.jnet.buffer.IoBuffer;
 
 public final class IoUtils {
@@ -42,7 +39,8 @@ public final class IoUtils {
         }
         return len;
     }
-    public static final void main(String args[]){
+
+    public static final void main(String args[]) {
         System.out.println(~1);
     }
 }

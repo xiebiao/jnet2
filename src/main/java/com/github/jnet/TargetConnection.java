@@ -17,9 +17,9 @@ public abstract class TargetConnection extends AbstractConnection {
         super(channel);
     }
 
-    public void connect(Selector selector) throws IOException {       
+    public void connect(Selector selector) throws IOException {
         channel.connect(new InetSocketAddress(host, port));
-        channel.register(selector, SelectionKey.OP_CONNECT, this);
+        processKey = channel.register(selector, SelectionKey.OP_CONNECT, this);
         System.out.println("connect...");
 
     }
