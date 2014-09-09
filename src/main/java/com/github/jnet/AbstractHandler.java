@@ -2,16 +2,16 @@ package com.github.jnet;
 
 public class AbstractHandler implements IoHandler {
 
-    protected AbstractConnection connection;
+  protected AbstractConnection connection;
 
-    public AbstractHandler(AbstractConnection connection) {
-        this.connection = connection;
+  public AbstractHandler(AbstractConnection connection) {
+    this.connection = connection;
 
-    }
+  }
 
-    @Override
-    public void handle(byte[] data) {
+  @Override
+  public void handle(byte[] data) {
 
-    }
+  }
 
 }

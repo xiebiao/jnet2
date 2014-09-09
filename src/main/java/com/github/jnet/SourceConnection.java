@@ -5,8 +5,8 @@ import java.nio.channels.SocketChannel;
 
 public abstract class SourceConnection extends AbstractConnection {
 
-    public SourceConnection(SocketChannel channel) throws IOException {
-        super(channel);
-    }
+  public SourceConnection(SocketChannel channel) throws IOException {
+    super(channel);
+  }
 
 }
