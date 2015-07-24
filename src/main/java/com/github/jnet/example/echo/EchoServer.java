@@ -19,7 +19,7 @@ public class EchoServer extends IoAcceptor {
      */
     public static void main(String[] args) throws Throwable {
         AbstractConnectionFactory factory = new EchoConnectionFactory();
-        EchoServer acceptor = new EchoServer(new InetSocketAddress("127.0.0.1", 8080), factory);
+        EchoServer acceptor = new EchoServer(new InetSocketAddress("127.0.0.1", 8083), factory);
         IoProcessor[] processors = new IoProcessor[Runtime.getRuntime().availableProcessors()];
         for (int i = 0; i < processors.length; i++) {
             processors[i] = new IoProcessor(i + "");

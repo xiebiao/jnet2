@@ -28,7 +28,7 @@ public abstract class IoAcceptor implements Acceptor {
     this.factory = factory;
     this.socketAddress = address;
     selector = Selector.open();
-    serverSocketChannel = ServerSocketChannel.open();;
+    serverSocketChannel = ServerSocketChannel.open();
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.socket().bind(socketAddress);
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -60,6 +60,7 @@ public abstract class IoAcceptor implements Acceptor {
 
   private void accept() {
     SocketChannel channel = null;
+
     try {
       channel = serverSocketChannel.accept();
       channel.configureBlocking(false);
@@ -67,8 +68,11 @@ public abstract class IoAcceptor implements Acceptor {
       IoProcessor processor = this.getNextProcessor();
       connection.setProcessor(processor);
       processor.register(connection);
-    } catch (Throwable e) {
+    } catch (IOException e) {
+      // Error handle
+      e.printStackTrace();
     }
+
   }
 
   @Override

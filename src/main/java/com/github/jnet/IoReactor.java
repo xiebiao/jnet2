@@ -46,8 +46,9 @@ public final class IoReactor {
       while ((c = readQueue.poll()) != null) {
         try {
           c.register(selector);
-        } catch (Throwable e) {
-
+        } catch (IOException e) {
+          // Exception handle
+          e.printStackTrace();
         }
       }
     }
@@ -83,11 +84,10 @@ public final class IoReactor {
           }
 
         } catch (Exception e) {
+          // Exception handle
           e.printStackTrace();
         }
-
       }
-
     }
   }
 
