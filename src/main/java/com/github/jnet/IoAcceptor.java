@@ -32,7 +32,13 @@ public abstract class IoAcceptor implements Acceptor {
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.socket().bind(socketAddress);
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-    logger.debug("Server started: " + socketAddress);
+    logger.debug("" + socketAddress);
+  }
+
+  public IoAcceptor(String name, InetSocketAddress address, AbstractConnectionFactory factory)
+      throws IOException {
+    this(address, factory);
+    logger.debug("Server " + name + " started: ");
   }
 
   @Override

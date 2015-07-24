@@ -16,8 +16,8 @@ public class HttpClient extends IoConnector {
     try {
       SocketChannel channel = SocketChannel.open();
       HttpConnection connection = new HttpConnection(channel);
-      connection.setHost("127.0.0.1");
-      connection.setPort(8080);
+      connection.setHost("www.baidu.com");
+      connection.setPort(80);
       HttpClient httpClient = new HttpClient("test");
       httpClient.holdConnect(connection);
       IoProcessor[] processors = new IoProcessor[Runtime.getRuntime().availableProcessors()];
