@@ -2,7 +2,7 @@ package com.github.jnet.factory;
 
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.TargetConnection;
+import com.github.jnet.nio.TargetConnection;
 
 
 public abstract class TargetConnectionFactory extends AbstractConnectionFactory {

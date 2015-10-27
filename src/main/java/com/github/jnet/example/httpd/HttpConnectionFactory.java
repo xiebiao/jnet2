@@ -3,7 +3,7 @@ package com.github.jnet.example.httpd;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.AbstractConnection;
+import com.github.jnet.nio.AbstractConnection;
 import com.github.jnet.factory.AbstractConnectionFactory;
 
 /**

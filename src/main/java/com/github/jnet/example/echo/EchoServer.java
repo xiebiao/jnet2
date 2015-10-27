@@ -1,7 +1,7 @@
 package com.github.jnet.example.echo;
 
-import com.github.jnet.IoAcceptor;
-import com.github.jnet.IoProcessor;
+import com.github.jnet.nio.IoAcceptor;
+import com.github.jnet.nio.IoProcessor;
 import com.github.jnet.factory.AbstractConnectionFactory;
 
 import java.io.IOException;

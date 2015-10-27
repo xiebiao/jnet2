@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.jnet.SourceConnection;
+import com.github.jnet.nio.SourceConnection;
 import com.github.jnet.utils.IoUtils;
 
 /**

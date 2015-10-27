@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.TargetConnection;
+import com.github.jnet.nio.TargetConnection;
 
 public class HttpConnection extends TargetConnection {
 

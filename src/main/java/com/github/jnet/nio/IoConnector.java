@@ -1,4 +1,4 @@
-package com.github.jnet;
+package com.github.jnet.nio;
 
 import java.io.IOException;
 import java.nio.channels.SelectionKey;

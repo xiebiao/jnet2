@@ -1,4 +1,4 @@
-package com.github.jnet;
+package com.github.jnet.nio;
 
 public class AbstractHandler implements IoHandler {
 

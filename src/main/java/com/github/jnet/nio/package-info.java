@@ -1,4 +1,4 @@
-package com.github.jnet;
+package com.github.jnet.nio;
 
 /**
  * http://en.wikipedia.org/wiki/Reactor_pattern

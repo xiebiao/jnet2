@@ -3,8 +3,8 @@ package com.github.jnet.example.httpd;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import com.github.jnet.IoAcceptor;
-import com.github.jnet.IoProcessor;
+import com.github.jnet.nio.IoAcceptor;
+import com.github.jnet.nio.IoProcessor;
 import com.github.jnet.factory.AbstractConnectionFactory;
 
 /**

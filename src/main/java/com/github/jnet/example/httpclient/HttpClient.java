@@ -3,8 +3,8 @@ package com.github.jnet.example.httpclient;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-import com.github.jnet.IoConnector;
-import com.github.jnet.IoProcessor;
+import com.github.jnet.nio.IoConnector;
+import com.github.jnet.nio.IoProcessor;
 
 public class HttpClient extends IoConnector {
 
