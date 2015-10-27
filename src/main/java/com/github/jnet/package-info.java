@@ -1,6 +1,7 @@
 package com.github.jnet;
 
 /**
- * http://www.cstor.cn/textdetail_2000.html
  * http://en.wikipedia.org/wiki/Reactor_pattern
+ * http://www.cnblogs.com/daoluanxiaozi/p/3274925.html
+ * http://www.artima.com/articles/io_design_patterns.html
  */
