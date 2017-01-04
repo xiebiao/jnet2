@@ -2,6 +2,7 @@ package com.github.jnet.nio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -28,6 +29,8 @@ public abstract class IoAcceptor implements Acceptor {
     this.factory = factory;
     this.socketAddress = address;
     selector = Selector.open();
+    //windows supported AIO
+    //AsynchronousServerSocketChannel
     serverSocketChannel = ServerSocketChannel.open();
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.socket().bind(socketAddress);
