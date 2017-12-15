@@ -10,9 +10,16 @@ public class JnetThreadPoolExcutor extends ThreadPoolExecutor {
 
   private String name;
 
-  public JnetThreadPoolExcutor(String name, int poolSize, BlockingQueue<Runnable> workQueue,
-      ThreadFactory threadFactory) {
-    super(poolSize, poolSize, Long.MAX_VALUE, TimeUnit.NANOSECONDS, workQueue, threadFactory);
+  public JnetThreadPoolExcutor(
+          String name, int poolSize,
+          BlockingQueue<Runnable> workQueue,
+          ThreadFactory threadFactory) {
+    super(poolSize,
+            poolSize,
+            Long.MAX_VALUE,
+            TimeUnit.NANOSECONDS,
+            workQueue,
+            threadFactory);
     this.name = name;
   }
 
