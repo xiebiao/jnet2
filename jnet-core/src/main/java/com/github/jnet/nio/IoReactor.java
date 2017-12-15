@@ -1,5 +1,7 @@
 package com.github.jnet.nio;
 
+import com.github.jnet.core.Connection;
+
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;

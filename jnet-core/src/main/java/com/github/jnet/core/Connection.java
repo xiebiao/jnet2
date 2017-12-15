@@ -1,4 +1,4 @@
-package com.github.jnet.nio;
+package com.github.jnet.core;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

@@ -7,6 +7,7 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.github.jnet.buffer.IoBuffer;
+import com.github.jnet.core.Connection;
 
 public abstract class AbstractConnection implements Connection {
 

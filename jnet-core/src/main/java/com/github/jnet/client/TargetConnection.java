@@ -1,4 +1,8 @@
-package com.github.jnet.nio;
+package com.github.jnet.client;
+
+import com.github.jnet.client.IoConnector;
+import com.github.jnet.nio.AbstractConnection;
+import com.github.jnet.nio.IoHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

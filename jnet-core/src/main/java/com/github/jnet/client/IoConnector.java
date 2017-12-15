@@ -1,4 +1,7 @@
-package com.github.jnet.nio;
+package com.github.jnet.client;
+
+import com.github.jnet.core.Acceptor;
+import com.github.jnet.nio.IoProcessor;
 
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
