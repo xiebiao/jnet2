@@ -34,7 +34,7 @@ public final class IoReactor {
 
   class Reader implements Runnable {
 
-    private LinkedBlockingQueue<Connection> readQueue = new LinkedBlockingQueue<Connection>();
+    private LinkedBlockingQueue<Connection> readQueue = new LinkedBlockingQueue<>();
     private final Selector selector;
 
     public Reader() throws IOException {

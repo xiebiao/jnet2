@@ -2,7 +2,6 @@ package com.github.jnet.nio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -68,15 +67,15 @@ public abstract class IoAcceptor implements Acceptor {
   }
 
   private void accept() {
-    SocketChannel channel = null;
 
+    SocketChannel channel = null;
     try {
       channel = serverSocketChannel.accept();
       channel.configureBlocking(false);
       AbstractConnection connection = factory.create(channel);
-      IoProcessor processor = this.getNextProcessor();
-      connection.setProcessor(processor);
-      processor.register(connection);
+      IoProcessor ioProcessor = this.getNextIoProcessor();
+      connection.setProcessor(ioProcessor);
+      ioProcessor.register(connection);
     } catch (IOException e) {
       // Error handle
       e.printStackTrace();
@@ -89,7 +88,7 @@ public abstract class IoAcceptor implements Acceptor {
     this.processors = processors;
   }
 
-  protected IoProcessor getNextProcessor() {
+  protected IoProcessor getNextIoProcessor() {
     this.nextProcessorIndex = (this.nextProcessorIndex + 1) % this.processors.length;
     return this.processors[this.nextProcessorIndex];
   }
