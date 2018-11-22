@@ -7,16 +7,16 @@ import com.github.jnet.factory.AbstractConnectionFactory;
 
 public class EchoConnectionFactory extends AbstractConnectionFactory {
 
-  @Override
-  protected EchoConnection getConnection(SocketChannel channel) {
-    EchoConnection con = null;
-    try {
-      con = new EchoConnection(channel);
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+    @Override
+    protected EchoConnection getConnection(SocketChannel channel) {
+        EchoConnection con = null;
+        try {
+            con = new EchoConnection(channel);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return con;
     }
-    return con;
-  }
 
 }

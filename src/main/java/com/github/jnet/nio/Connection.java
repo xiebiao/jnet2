@@ -6,14 +6,14 @@ import java.nio.channels.Selector;
 
 public interface Connection {
 
-  void register(Selector selector) throws IOException;
+    void register(Selector selector) throws IOException;
 
-  void write(ByteBuffer buffer) throws IOException;
+    void write(ByteBuffer buffer) throws IOException;
 
-  void write();
+    void write();
 
-  void read() throws IOException;
+    void read() throws IOException;
 
-  boolean close() throws IOException;
+    boolean close() throws IOException;
 
 }

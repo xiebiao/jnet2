@@ -7,10 +7,10 @@ import com.github.jnet.nio.TargetConnection;
 
 public abstract class TargetConnectionFactory extends AbstractConnectionFactory {
 
-  @Override
-  protected TargetConnection getConnection(SocketChannel channel) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+    @Override
+    protected TargetConnection getConnection(SocketChannel channel) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

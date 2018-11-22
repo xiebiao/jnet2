@@ -6,10 +6,10 @@ import com.github.jnet.nio.SourceConnection;
 
 public abstract class SourceConnectionFactory extends AbstractConnectionFactory {
 
-  @Override
-  protected SourceConnection getConnection(SocketChannel channel) {
+    @Override
+    protected SourceConnection getConnection(SocketChannel channel) {
 
-    return null;
-  }
+        return null;
+    }
 
 }

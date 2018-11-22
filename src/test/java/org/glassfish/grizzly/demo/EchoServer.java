@@ -15,44 +15,44 @@ import org.glassfish.grizzly.utils.StringFilter;
  */
 public class EchoServer {
 
-  private static final Logger logger = Logger.getLogger(EchoServer.class.getName());
-  public static final String HOST = "localhost";
-  public static final int PORT = 7777;
+    private static final Logger logger = Logger.getLogger(EchoServer.class.getName());
+    public static final  String HOST   = "localhost";
+    public static final  int    PORT   = 7777;
 
-  public static void main(String[] args) throws IOException {
-    // Create a FilterChain using FilterChainBuilder
-    FilterChainBuilder filterChainBuilder = FilterChainBuilder.stateless();
+    public static void main(String[] args) throws IOException {
+        // Create a FilterChain using FilterChainBuilder
+        FilterChainBuilder filterChainBuilder = FilterChainBuilder.stateless();
 
-    // Add TransportFilter, which is responsible
-    // for reading and writing data to the connection
-    filterChainBuilder.add(new TransportFilter());
+        // Add TransportFilter, which is responsible
+        // for reading and writing data to the connection
+        filterChainBuilder.add(new TransportFilter());
 
-    // StringFilter is responsible for Buffer <-> String conversion
-    filterChainBuilder.add(new StringFilter(Charset.forName("UTF-8")));
+        // StringFilter is responsible for Buffer <-> String conversion
+        filterChainBuilder.add(new StringFilter(Charset.forName("UTF-8")));
 
-    // EchoFilter is responsible for echoing received messages
-    filterChainBuilder.add(new EchoFilter());
+        // EchoFilter is responsible for echoing received messages
+        filterChainBuilder.add(new EchoFilter());
 
-    // Create TCP transport
-    final TCPNIOTransport transport = TCPNIOTransportBuilder.newInstance().build();
+        // Create TCP transport
+        final TCPNIOTransport transport = TCPNIOTransportBuilder.newInstance().build();
 
-    transport.setProcessor(filterChainBuilder.build());
-    try {
-      // binding transport to start listen on certain host and port
-      transport.bind(HOST, PORT);
+        transport.setProcessor(filterChainBuilder.build());
+        try {
+            // binding transport to start listen on certain host and port
+            transport.bind(HOST, PORT);
 
-      // start the transport
-      transport.start();
+            // start the transport
+            transport.start();
 
-      logger.info("Press any key to stop the server...");
-      System.in.read();
-    } finally {
-      logger.info("Stopping transport...");
-      // stop the transport
-      transport.shutdownNow();
+            logger.info("Press any key to stop the server...");
+            System.in.read();
+        } finally {
+            logger.info("Stopping transport...");
+            // stop the transport
+            transport.shutdownNow();
 
-      logger.info("Stopped transport...");
+            logger.info("Stopped transport...");
+        }
     }
-  }
 }
 

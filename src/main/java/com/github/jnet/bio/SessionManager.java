@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
  */
 public final class SessionManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(SessionManager.class);
-    private List<Session> sessionList = new ArrayList<Session>();
-    private volatile Boolean lock = false;
-    private Class<?> sessionHandler;
-    private long readTimeout;
-    private long writeTimeout;
+    private static final Logger        logger      = LoggerFactory.getLogger(SessionManager.class);
+    private              List<Session> sessionList = new ArrayList<Session>();
+    private volatile     Boolean       lock        = false;
+    private              Class<?>      sessionHandler;
+    private              long          readTimeout;
+    private              long          writeTimeout;
 
     public SessionManager() {
         readTimeout = writeTimeout = 1000;

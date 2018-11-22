@@ -6,9 +6,9 @@ import com.github.jnet.nio.AbstractConnection;
 
 public abstract class AbstractConnectionFactory {
 
-  protected abstract AbstractConnection getConnection(SocketChannel channel);
+    protected abstract AbstractConnection getConnection(SocketChannel channel);
 
-  public AbstractConnection create(SocketChannel channel) {
-    return this.getConnection(channel);
-  }
+    public AbstractConnection create(SocketChannel channel) {
+        return this.getConnection(channel);
+    }
 }

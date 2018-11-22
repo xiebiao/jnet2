@@ -11,15 +11,16 @@ import com.github.jnet.factory.AbstractConnectionFactory;
  * @date 7/24/15
  */
 public class HttpConnectionFactory extends AbstractConnectionFactory {
-  @Override
-  protected AbstractConnection getConnection(SocketChannel channel) {
-    try {
-      HttpConnection httpConnection = new HttpConnection(channel);
-      return httpConnection;
-    } catch (IOException e) {
-      e.printStackTrace();
+
+    @Override
+    protected AbstractConnection getConnection(SocketChannel channel) {
+        try {
+            HttpConnection httpConnection = new HttpConnection(channel);
+            return httpConnection;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    return null;
-  }
 
 }

@@ -110,7 +110,6 @@ public class IoBuffer {
      * 读取一个byte，但不改变position
      *
      * @param index 起始位置
-     * @return
      */
     public byte getByte(int index) {
         int pos = buf.position();
@@ -122,8 +121,6 @@ public class IoBuffer {
 
     /**
      * 读取一个byte，起始位置=position，但不改变position
-     *
-     * @return
      */
     public byte getByte() {
         return getByte(buf.position());
@@ -133,7 +130,6 @@ public class IoBuffer {
      * 读取byte[]，起始位置=position，但不改变position
      *
      * @param len 长度
-     * @return
      */
     public byte[] getBytes(int len) {
         return getBytes(buf.position(), len);
@@ -143,8 +139,7 @@ public class IoBuffer {
      * 读取byte[]，但不改变position
      *
      * @param index 起始位置
-     * @param len   长度
-     * @return
+     * @param len 长度
      */
     public byte[] getBytes(int index, int len) {
         int pos = buf.position();
@@ -159,7 +154,6 @@ public class IoBuffer {
      * 写入byte，起始位置=position
      *
      * @param b 数据
-     * @return
      */
     public void writeByte(byte b) {
         buf.position(buf.position());
@@ -170,8 +164,7 @@ public class IoBuffer {
      * 写入byte
      *
      * @param index 起始位置
-     * @param b     数据
-     * @return
+     * @param b 数据
      */
     public void writeByte(int index, byte b) {
         buf.position(index);
@@ -182,7 +175,6 @@ public class IoBuffer {
      * 写入byte[]，起始位置=position
      *
      * @param bytes 数据
-     * @return
      */
     public void writeBytes(byte[] bytes) {
         writeBytes(buf.position(), bytes);
@@ -193,7 +185,6 @@ public class IoBuffer {
      *
      * @param index 起始位置
      * @param bytes 数据
-     * @return
      */
     public void writeBytes(int index, byte[] bytes) {
         buf.position(index);
@@ -204,9 +195,8 @@ public class IoBuffer {
     /**
      * 读取字符串，起始位置=position
      *
-     * @param len     长度
+     * @param len 长度
      * @param charset 编码
-     * @return
      */
     public String readString(int len, String charset) {
         return readString(buf.position(), len, charset);
@@ -215,10 +205,9 @@ public class IoBuffer {
     /**
      * 读取字符串
      *
-     * @param index   起始位置
-     * @param len     长度
+     * @param index 起始位置
+     * @param len 长度
      * @param charset 编码
-     * @return
      */
     public String readString(int index, int len, String charset) {
         buf.position(index);
@@ -234,7 +223,6 @@ public class IoBuffer {
      * 读取字符串，起始位置=0,长度=position，但不改变position
      *
      * @param charset 编码
-     * @return
      */
     public String getString(String charset) {
         return getString(0, buf.position(), charset);
@@ -243,9 +231,8 @@ public class IoBuffer {
     /**
      * 读取字符串，起始位置=0，但不改变position
      *
-     * @param len     长度
+     * @param len 长度
      * @param charset 编码
-     * @return
      */
     public String getString(int len, String charset) {
         return getString(buf.position(), len, charset);
@@ -254,10 +241,9 @@ public class IoBuffer {
     /**
      * 读取字符串，但不改变position
      *
-     * @param index   起始位置
-     * @param len     长度
+     * @param index 起始位置
+     * @param len 长度
      * @param charset 编码
-     * @return
      */
     public String getString(int index, int len, String charset) {
         int pos = buf.position();
@@ -274,7 +260,7 @@ public class IoBuffer {
     /**
      * 写入字符串，起始位置=position
      *
-     * @param str     字符串
+     * @param str 字符串
      * @param charset 编码
      */
     public void writeString(String str, String charset) {

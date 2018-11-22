@@ -17,18 +17,18 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class Server {
 
-    private static final Logger logger = LoggerFactory.getLogger(Server.class);
-    protected String name = "Server";
-    private Worker[] workers;
-    private Selector selector;
-    private ServerSocketChannel serverSocket;
-    private int nextWorkerIndex = 0;
-    private SessionManager sessionManager;
-    private ExecutorService executor;
-    private Object _lock = new Object();
-    protected InetSocketAddress socketAddress;
-    private int threads;
-    protected int maxConnection;
+    private static final Logger              logger          = LoggerFactory.getLogger(Server.class);
+    protected            String              name            = "Server";
+    private              Worker[]            workers;
+    private              Selector            selector;
+    private              ServerSocketChannel serverSocket;
+    private              int                 nextWorkerIndex = 0;
+    private              SessionManager      sessionManager;
+    private              ExecutorService     executor;
+    private              Object              _lock           = new Object();
+    protected            InetSocketAddress   socketAddress;
+    private              int                 threads;
+    protected            int                 maxConnection;
 
     public Server(InetSocketAddress socketAddress) {
         this.socketAddress = socketAddress;
@@ -43,8 +43,6 @@ public abstract class Server {
 
     /**
      * 启动服务
-     *
-     * @throws Exception
      */
     public void start() throws Exception {
         synchronized (_lock) {
@@ -62,8 +60,9 @@ public abstract class Server {
                     }
                     selector.select(1000L);// block
                     csocket = serverSocket.accept();
-                    if (csocket == null)
+                    if (csocket == null) {
                         continue;
+                    }
                     csocket.configureBlocking(false);
                     Session session = sessionManager.getSession();
                     if (session == null) {
@@ -123,8 +122,6 @@ public abstract class Server {
 
     /**
      * 处理一个新session，为其指定一个工作线程，并加入到工作线程新session队列
-     *
-     * @param session
      */
     private void handleNewSession(Session session) {
         workers[nextWorkerIndex].addNewSession(session);

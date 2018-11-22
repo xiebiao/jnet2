@@ -24,13 +24,17 @@ public class SimpleServer {
              * 轮询是否有连接过来(如果并发连接请求，将导致阻塞)
              */
             Socket socket = serverSocket.accept();
-            if (socket == null) continue;
+            if (socket == null) {
+                continue;
+            }
             new Thread(new Worker(socket)).start();
         }
     }
 
     class Worker implements Runnable {
+
         private Socket socket;
+
         Worker(Socket socket) {
             this.socket = socket;
         }
@@ -42,7 +46,7 @@ public class SimpleServer {
                 String line = null;
                 PrintWriter writer = new PrintWriter(socket.getOutputStream());
                 while (reader != null && (line = reader.readLine()) != null && !line.equals("\n")) {
-                    System.out.println(line);        
+                    System.out.println(line);
                     writer.write(line + "\r\n");
                     writer.flush();
                 }
@@ -50,7 +54,7 @@ public class SimpleServer {
                 e.printStackTrace();
             }
         }
-    }  
+    }
 
     public static void main(String[] args) throws IOException {
         SimpleServer server = new SimpleServer(8081);

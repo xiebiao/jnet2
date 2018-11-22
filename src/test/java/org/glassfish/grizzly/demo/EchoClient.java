@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  * Created by xiebiao on 2015/10/27.
  */
 public class EchoClient {
+
     private static final Logger logger = Grizzly.logger(EchoClient.class);
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException,

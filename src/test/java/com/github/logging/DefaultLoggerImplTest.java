@@ -9,9 +9,10 @@ import com.github.logging.internal.DefaultLoggerImpl;
  * @date 7/26/15
  */
 public class DefaultLoggerImplTest {
-  @Test
-  public void debug() {
-    DefaultLoggerImpl defaultLogger = new DefaultLoggerImpl("test");
-    defaultLogger.debug("xx");
-  }
+
+    @Test
+    public void debug() {
+        DefaultLoggerImpl defaultLogger = new DefaultLoggerImpl("test");
+        defaultLogger.debug("xx");
+    }
 }

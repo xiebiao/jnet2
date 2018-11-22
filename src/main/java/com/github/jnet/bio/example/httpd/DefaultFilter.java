@@ -1,7 +1,6 @@
 package com.github.jnet.bio.example.httpd;
 
 
-
 public class DefaultFilter implements Filter {
 
     @Override

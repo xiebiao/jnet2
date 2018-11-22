@@ -5,15 +5,16 @@ package com.github.logging;
  * @date 7/26/15
  */
 public interface Logger {
-  void debug(String info);
 
-  void debug(Throwable throwable);
+    void debug(String info);
 
-  void info(String info);
+    void debug(Throwable throwable);
 
-  void info(Throwable throwable);
+    void info(String info);
 
-  void error(String info);
+    void info(Throwable throwable);
 
-  void error(Throwable throwable);
+    void error(String info);
+
+    void error(Throwable throwable);
 }

@@ -15,23 +15,23 @@ import com.github.jnet.utils.IoUtils;
 
 public class Worker implements Runnable {
 
-    private static final Logger logger            = LoggerFactory.getLogger(Worker.class);
-    private Selector            selector;
-    private SessionManager      sessionManager;
-    private Queue<Session>      newSessionQueue   = new ConcurrentLinkedQueue<Session>();
-    private List<Session>       eventSessionList  = new ArrayList<Session>();
-    private Set<Session>        timeoutSessionSet = new TreeSet<Session>(new Comparator<Session>() {
+    private static final Logger         logger            = LoggerFactory.getLogger(Worker.class);
+    private              Selector       selector;
+    private              SessionManager sessionManager;
+    private              Queue<Session> newSessionQueue   = new ConcurrentLinkedQueue<Session>();
+    private              List<Session>  eventSessionList  = new ArrayList<Session>();
+    private              Set<Session>   timeoutSessionSet = new TreeSet<Session>(new Comparator<Session>() {
 
-                                                      public int compare(Session a, Session b) {
-                                                          if (a.getNextTimeout() - b.getNextTimeout() == 0) {
-                                                              return 0;
-                                                          } else if (a.getNextTimeout() - b.getNextTimeout() > 0) {
-                                                              return 1;
-                                                          } else {
-                                                              return -1;
-                                                          }
-                                                      }
-                                                  });
+        public int compare(Session a, Session b) {
+            if (a.getNextTimeout() - b.getNextTimeout() == 0) {
+                return 0;
+            } else if (a.getNextTimeout() - b.getNextTimeout() > 0) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    });
 
     public Worker(SessionManager sessionManager) throws IOException {
         this.sessionManager = sessionManager;
@@ -40,7 +40,6 @@ public class Worker implements Runnable {
 
     /**
      * 设置超时的session加入到超时队列中
-     * @param session
      */
     private void addTimeoutSession(Session session) {
         logger.debug("Session[" + session.getId() + "] is time out.");
@@ -92,7 +91,6 @@ public class Worker implements Runnable {
 
     /**
      * 初始化新会话
-     * @param session
      */
     private void initNewSession(Session session) {
         try {
@@ -112,8 +110,6 @@ public class Worker implements Runnable {
 
     /**
      * 更新session状态
-     * @param session
-     * @throws ClosedChannelException
      */
     private void updateSession(Session session) throws ClosedChannelException {
         if (session.getCurrentState() == Session.IoState.READ && session.readBuffer.remaining() > 0) {
@@ -194,8 +190,6 @@ public class Worker implements Runnable {
 
     /**
      * 处理超时事件
-     * @param session
-     * @throws Exception
      */
     private void timeoutEvent(Session session) {
         try {
@@ -251,8 +245,6 @@ public class Worker implements Runnable {
 
     /**
      * 处理读事件
-     * @param session
-     * @throws Exception
      */
     public void readEvent(Session session) throws Exception {
         ioEvent(session, session.readBuffer);
@@ -260,8 +252,6 @@ public class Worker implements Runnable {
 
     /**
      * 处理写事件
-     * @param session
-     * @throws ClosedChannelException
      */
     public void writeEvent(Session session) throws Exception {
         ioEvent(session, session.writeBuffer);
@@ -269,7 +259,6 @@ public class Worker implements Runnable {
 
     /**
      * 关闭session 用于清理
-     * @param session
      */
     private void close(Session session) {
         if (session.getSocketChannel() != null) {
