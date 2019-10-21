@@ -11,7 +11,6 @@ public abstract class TargetConnection extends AbstractConnection {
     protected String      host;
     protected int         port;
     protected IoConnector connector;
-    protected IoHandler   handler;
 
     public TargetConnection(SocketChannel channel) throws IOException {
         super(channel);

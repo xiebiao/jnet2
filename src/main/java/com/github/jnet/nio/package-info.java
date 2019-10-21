@@ -1,6 +1,10 @@
 package com.github.jnet.nio;
 
 /**
- * http://en.wikipedia.org/wiki/Reactor_pattern http://www.cnblogs.com/daoluanxiaozi/p/3274925.html
- * http://www.artima.com/articles/io_design_patterns.html
+ * 三种IO并发策略:
+ * <ul>
+ * <li>- blocking I/O</li>
+ * <li>- non blocking synchronous</li>
+ * <li>- non blocking asynchronous</li>
+ * </ul>
  */
